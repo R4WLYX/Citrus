@@ -7,7 +7,7 @@
                 "${workspaceFolder}/**",
                 "C:/glew/include",
                 "C:/glfw/include",
-                "${workspaceFolder}/src/core/graphics",
+                "${workspaceFolder}/src/citrus/graphics",
                 "${workspaceFolder}/src/workspace",
                 "${workspaceFolder}/lib"
             ],
@@ -19,7 +19,7 @@
             "windowsSdkVersion": "10.0.22621.0",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "windows-msvc-x64"
         }
     ],
     "version": 4
