@@ -1,3 +1,6 @@
+CMakeLists.txt
+
+.gitignore
 .vscode
 bin
 tmp
