@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "Entity.hpp"
-#include "System.h"
+#include "System.hpp"
 
 class EntityManager {
 public:

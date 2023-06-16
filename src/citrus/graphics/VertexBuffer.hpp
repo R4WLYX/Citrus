@@ -1,7 +1,7 @@
 #ifndef VERTEX_BUFFER_HPP
 #define VERTEX_BUFFER_HPP
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 
 class VertexBuffer {
 private:

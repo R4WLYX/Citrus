@@ -2,7 +2,7 @@
 #define VERTEX_BUFFER_LAYOUT_HPP
 
 #include <vector>
-#include "Utils.hpp"
+#include "Keywords.hpp"
 
 struct VertexBufferElement {
     VertexBufferElement(unsigned int type, unsigned int count, unsigned char normalized) :

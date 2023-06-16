@@ -33,7 +33,7 @@ int main() {
 
     glfwGetMonitorWorkarea(monitor, NULL, NULL, &monitorWidth, &monitorHeight);
 
-    window = glfwCreateWindow(monitorWidth, monitorHeight, "Hello World! :D", monitor, NULL);
+    window = glfwCreateWindow(monitorWidth, monitorHeight, "Hello World! :D", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;

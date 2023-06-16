@@ -1,7 +1,7 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 #include "stb_image/stb_image.h"
 
 class Texture {

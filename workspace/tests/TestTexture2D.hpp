@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
@@ -59,7 +59,7 @@ public:
 
         m_ib = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_shader = std::make_unique<Shader>("../src/workspace/shaders/texture.glsl");
+        m_shader = std::make_unique<Shader>("../workspace/shaders/texture.glsl");
         m_shader->bind();
 
         m_texture = std::make_unique<Texture>("../res/textures/shrek.png");

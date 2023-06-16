@@ -7,7 +7,7 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 #include "glm/glm.hpp"
 
 struct ShaderSource {
@@ -129,7 +129,7 @@ private:
         }
 
         m_ShaderSourceCache[filePath] = {ss[0].str(), ss[1].str()};
-        return m_ShaderSourceCache[filePath];
+        return {ss[0].str(), ss[1].str()};
     }
 
     unsigned int compile_shader(unsigned int type, const std::string& source) {
@@ -145,8 +145,7 @@ private:
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
             char* message = (char*)alloca(length*sizeof(char));
             glGetShaderInfoLog(id, length, &length, message);
-            std::cout<<"Failed To Compile "<<(type == GL_VERTEX_SHADER? "Vertex" : "Fragment")<<" Shader."<<'\n';
-            std::cout<<message<<'\n';
+            std::cerr<<"Failed To Compile "<<(type == GL_VERTEX_SHADER? "Vertex" : "Fragment")<<" Shader."<<'\n'<<message<<'\n';
             glDeleteShader(id);
             return 0;
         }

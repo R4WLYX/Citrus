@@ -1,7 +1,7 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
 #include "Shader.hpp"

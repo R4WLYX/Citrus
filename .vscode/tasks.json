@@ -9,17 +9,17 @@
                 "-std=c++17",
                 "-g",
                 "-Ofast",
-                "${workspaceFolder}\\workspace\\Application.cpp",
-                "${workspaceFolder}\\lib\\stb_image\\stb_image_impl.cpp",
-                "${workspaceFolder}\\lib\\imgui\\*.cpp",
                 "-o",
-                "${workspaceFolder}\\bin\\Application.exe",
+                "bin\\Application.exe",
+                "workspace\\Application.cpp",
+                "lib\\imgui\\*.cpp",
+                "lib\\stb_image\\stb_image_impl.cpp",
                 "-IC:\\glfw\\include",
                 "-IC:\\glew\\include",
-                "-I${workspaceFolder}\\lib",
-                "-I${workspaceFolder}\\src\\citrus\\core",
-                "-I${workspaceFolder}\\src\\citrus\\graphics",
-                "-I${workspaceFolder}\\workspace",
+                "-Ilib",
+                "-Isrc\\citrus\\core",
+                "-Isrc\\citrus\\graphics",
+                "-Iworkspace",
                 "-LC:\\glew\\lib\\Release\\x64",
                 "-LC:\\glfw\\lib-mingw-w64",
                 "-lglfw3dll",
@@ -27,7 +27,7 @@
                 "-lopengl32"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/app"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"

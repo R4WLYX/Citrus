@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Component.h"
+#include "Component.hpp"
 
 class Entity {
 public:
