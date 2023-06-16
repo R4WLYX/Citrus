@@ -5,11 +5,9 @@
             "includePath": [
                 "${default}",
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/*/*",
                 "C:/glew/include",
-                "C:/glfw/include",
-                "${workspaceFolder}/src/citrus/graphics",
-                "${workspaceFolder}/workspace",
-                "${workspaceFolder}/lib"
+                "C:/glfw/include"
             ],
             "defines": [
                 "_DEBUG",
