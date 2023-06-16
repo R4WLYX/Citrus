@@ -9,8 +9,8 @@
 
 #include "EntityManager.hpp"
 #include "Entity.hpp"
-#include "Component.h"
-#include "System.h"
+#include "Component.hpp"
+#include "System.hpp"
 
 #include "Renderer.hpp"
 

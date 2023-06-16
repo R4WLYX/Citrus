@@ -1,7 +1,7 @@
 #ifndef INDEX_BUFFER_HPP
 #define INDEX_BUFFER_HPP
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 
 class IndexBuffer {
 private:

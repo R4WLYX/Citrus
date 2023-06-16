@@ -1,7 +1,8 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef KEYWORDS_HPP
+#define KEYWORDS_HPP
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 #define ASSERT(x) if (!(x)) __debugbreak();

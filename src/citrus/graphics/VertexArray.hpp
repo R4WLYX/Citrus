@@ -1,7 +1,7 @@
 #ifndef VERTEX_ARRAY_HPP
 #define VERTEX_ARRAY_HPP
 
-#include "Utils.hpp"
+#include "Keywords.hpp"
 #include "VertexBuffer.hpp"
 #include "VertexBufferLayout.hpp"
 
