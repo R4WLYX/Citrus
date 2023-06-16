@@ -64,10 +64,10 @@ public:
 
         m_ib = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_shader = std::make_unique<Shader>("../workspace/shaders/texture.glsl");
+        m_shader = std::make_unique<Shader>("../citrus-workspace/res/shaders/texture.glsl");
         m_shader->bind();
 
-        m_texture = std::make_unique<Texture>("C:/Users/user/Desktop/Citrus/res/textures/shrek.png");
+        m_texture = std::make_unique<Texture>("../citrus-workspace/res/textures/shrek.png");
         m_texture->bind();
         m_shader->set_uniform_1i("u_texture", 0);
     }
