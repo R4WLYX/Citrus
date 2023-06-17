@@ -2,6 +2,7 @@
 #define TEST_HPP
 
 #include <vector>
+#include <string>
 #include <functional>
 
 #include "imgui/imgui.h"

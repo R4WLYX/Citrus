@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
+#include <map>
 
 #include "Keywords.hpp"
 #include "glm/glm.hpp"
@@ -20,8 +20,7 @@ class Shader {
 private:
     std::string m_FilePath;
     unsigned int m_RendererID;
-    std::unordered_map<std::string, ShaderSource> m_ShaderSourceCache;
-    std::unordered_map<std::string, int> m_UniformLocationCache;
+    std::map<std::string, int> m_UniformLocationCache;
 public:
     Shader(const std::string& fileName)
     : m_FilePath(fileName), m_RendererID(0) {
@@ -95,17 +94,8 @@ public:
     }
 #pragma endregion SetUniforms
 private:
-    std::string get_path(const std::string& realtivePath) {
-        return std::filesystem::absolute(realtivePath).string();
-    }
-    
     ShaderSource parse_shader(const std::string& path) {
-        std::string filePath = get_path(path);
-
-        if (m_ShaderSourceCache.find(filePath) != m_ShaderSourceCache.end());
-            return m_ShaderSourceCache[filePath];
-
-        std::ifstream fstream(filePath);
+        std::ifstream fstream(path);
 
         enum class ShaderType {
             NONE = -1, VERTEX = 0, FRAGMENT = 1
@@ -127,8 +117,7 @@ private:
 
             std::cout<<line<<'\n';
         }
-
-        m_ShaderSourceCache[filePath] = {ss[0].str(), ss[1].str()};
+        
         return {ss[0].str(), ss[1].str()};
     }
 

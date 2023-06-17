@@ -67,7 +67,7 @@ public:
         m_shader = std::make_unique<Shader>("C:/Users/user/Desktop/Citrus/citrus-workspace/res/shaders/texture.glsl");
         m_shader->bind();
 
-        m_texture = std::make_unique<Texture>("C:/Users/user/Desktop/Citrus/citrus-workspace/res/textures/shrek.png");
+        m_texture = std::make_unique<Texture>("C:/Users/user/Desktop/Citrus/citrus-workspace/res/textures/container.png");
         m_texture->bind();
         m_shader->set_uniform_1i("u_texture", 0);
     }
