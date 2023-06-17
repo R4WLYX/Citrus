@@ -10,7 +10,7 @@
 #include "tests/TestTexture2D.hpp"
 #include "tests/TestMovement2D.hpp"
 
-int main() { 
+int main() {
     GLFWwindow* window;
     GLFWmonitor* monitor;
     int monitorWidth, monitorHeight;
