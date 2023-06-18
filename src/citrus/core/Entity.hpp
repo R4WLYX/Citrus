@@ -1,35 +1,58 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#define InvalidComponent nullptr
+
 #include <vector>
 
 #include "Component.hpp"
 
-class Entity {
-public:
-    Entity(int id) : m_ID(id) {}
-
-    void add_component(Component* component) {
-        m_Components.push_back(component);
-    }
-
-    void remove_component(Component* component) {
-        m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
-    }
-
-    template <typename T>
-    T* get_component() const {
-        for (Component* component : m_Components) {
-            if (T* castedComponent = dynamic_cast<T*>(component)) {
-                return castedComponent;
-            }
-        }
-        return nullptr;
-    }
-
+template <typename E>
+struct Entity {
 private:
-    int m_ID;
-    std::vector<Component*> m_Components;
+    std::vector<void*> Components;
+
+public:
+    const char* type;
+
+    Entity()
+    : type(typeid(E).name())
+    {}
+
+    template <typename C>
+    Entity<E>* add_component() {
+        if (get_component<C>() == InvalidComponent)
+            Components.push_back(new C());
+        return this;
+    }
+
+    template <typename C>
+    Entity<E>* add_component(C& component) {
+        if (get_component<C>() == InvalidComponent)
+            Components.push_back(&component);
+        return this;
+    }
+
+    template <typename C>
+    Entity<E>* add_component(C&& component) {
+        if (get_component<C>() == InvalidComponent)
+            Components.push_back(&component);
+        return this;
+    }
+
+    template <typename C>
+    C* get_component() const {
+        const char* componentType = typeid(C).name();
+        C* component;
+
+        for (int i{}; i < Components.size(); i++) {
+            component = static_cast<C*>(Components[i]);
+            if (component->type == componentType)
+                return component;
+        }
+
+        return InvalidComponent;
+    }
 };
 
 #endif
