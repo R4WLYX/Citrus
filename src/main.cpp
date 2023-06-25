@@ -1,8 +1,5 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-
 #include "Renderer.hpp"
+#include "Window.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
@@ -14,47 +11,16 @@
 #include "tests/TestStress.hpp"
 
 int main() {
-    GLFWwindow* window;
-    GLFWmonitor* monitor;
-    int monitorWidth, monitorHeight;
-
-    if (!glfwInit())
-        return -1;
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    monitor = glfwGetPrimaryMonitor();
-    if (!monitor) {
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwGetMonitorWorkarea(monitor, NULL, NULL, &monitorWidth, &monitorHeight);
-
-    window = glfwCreateWindow(monitorWidth, monitorHeight, "Hello World! :D", monitor, NULL);
-    if (!window) {
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-
-    if (glewInit() != GLEW_OK)
-        std::cout << "Error\n";
+    Window window("Hello world!");
+    GLFWwindow* glfwWindow = window.get_glfw_window();
 
     {
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
         Renderer renderer;
 
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
         ImGui_ImplOpenGL3_Init("#version 330 core");
 
         test::Test* currentTest = nullptr;
@@ -66,7 +32,7 @@ int main() {
         testMenu->register_test<test::TestMovement2D>("2D Movement");
         testMenu->register_test<test::TestStress>("Stress test");
 
-        while (!glfwWindowShouldClose(window)) {
+        while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
             renderer.clear();
             
@@ -88,7 +54,7 @@ int main() {
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(glfwWindow);
         }
         
         delete currentTest;
@@ -99,9 +65,6 @@ int main() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
 
     return 0;
 }
