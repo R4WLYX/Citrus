@@ -64,7 +64,7 @@ public:
 
         m_ib = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_shader = std::make_unique<Shader>("../res/shaders/texture.glsl");
+        m_shader = std::make_unique<Shader>("../res/shaders/shader.glsl");
         m_shader->bind();
 
         m_texture = std::make_unique<Texture>("../res/textures/container.png");
