@@ -7,7 +7,7 @@
 
 class Window {
 public:
-    Window(const char* title = "untitled", int width = 0, int height = 0, bool fullscreen = false)
+    Window(const char* title = "untitled", const int width = -1, const int height = -1, bool fullscreen = false)
      : m_Title(title), m_Fullscreen(fullscreen)
     {
         m_MonitorWidth = width;
@@ -22,16 +22,18 @@ public:
             std::cerr << "Error: Monitor Not Found.\n";
         }
 
-        glfwGetMonitorWorkarea(m_Monitor, NULL, NULL, &m_MonitorWidth, &m_MonitorHeight);
+        if (width <= 0 || height <= 0 || m_Fullscreen)
+            glfwGetMonitorWorkarea(m_Monitor, NULL, NULL, &m_MonitorWidth, &m_MonitorHeight);
 
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-        m_Window = glfwCreateWindow(m_MonitorWidth, m_MonitorHeight, m_Title, NULL, NULL);
         if (m_Fullscreen)
             m_Window = glfwCreateWindow(m_MonitorWidth, m_MonitorHeight, m_Title, m_Monitor, NULL);
+        else
+            m_Window = glfwCreateWindow(m_MonitorWidth, m_MonitorHeight, m_Title, NULL, NULL);
 
         if (!m_Window) {
             glfwTerminate();

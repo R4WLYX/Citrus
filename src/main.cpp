@@ -11,7 +11,7 @@
 #include "tests/TestStress.hpp"
 
 int main() {
-    Window window("Hello world!");
+    Window window("Hello world!", 0, 0, true);
     GLFWwindow* glfwWindow = window.get_glfw_window();
 
     {
