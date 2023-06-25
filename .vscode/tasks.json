@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe build active file",
+			"command": "D:/dev/TDM-GCC-64/bin/g++.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"-O3",
+				"-o",
+				"bin\\${fileBasenameNoExtension}.exe",
+				"src\\${fileBasename}",
+				"lib\\imgui\\*.cpp",
+				"lib\\stb_image\\stb_image_impl.cpp",
+				"-Ilib",
+				"-Ilib\\citrus",
+				"-Ilib\\citrus\\core",
+				"-Ilib\\citrus\\graphics",
+				"-ID:\\dev\\glew\\include",
+				"-ID:\\dev\\glfw\\include",
+				"-LD:\\dev\\glew\\lib\\Release\\x64",
+				"-LD:\\dev\\glfw\\lib-mingw-w64",
+				"-lopengl32",
+				"-lglew32",
+				"-lglfw3dll"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: D:/dev/TDM-GCC-64/bin/g++.exe"
+		}
+	]
+}
