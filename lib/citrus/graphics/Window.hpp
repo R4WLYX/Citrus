@@ -5,6 +5,10 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Model.hpp"
+#include "Shader.hpp"
+#include "Keywords.hpp"
+
 class Window {
 public:
     Window(const char* title = "untitled", const int width = -1, const int height = -1, bool fullscreen = false)
@@ -52,11 +56,22 @@ public:
 
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+        m_Renderer = std::make_unique<Renderer>();
     }
 
     ~Window() {
         glfwDestroyWindow(m_Window);
         glfwTerminate();
+    }
+
+    void attach_shader(Shader shader) {
+        m_Shader = std::make_unique<Shader>(shader);
+        m_Shader->bind();
+    }
+
+    void draw(Model model) {
+
     }
 
     GLFWwindow* get_glfw_window() { return m_Window; }
@@ -68,6 +83,8 @@ private:
     const char* m_Title;
     int m_MonitorWidth, m_MonitorHeight;
     bool m_Fullscreen;
+    std::unique_ptr<Renderer> m_Renderer;
+    std::unique_ptr<Shader> m_Shader;
 };
 
 #endif

@@ -11,7 +11,7 @@
 				"-O3",
 				"-o",
 				"bin\\${fileBasenameNoExtension}.exe",
-				"src\\${fileBasename}",
+				"${file}",
 				"lib\\imgui\\*.cpp",
 				"lib\\stb_image\\stb_image_impl.cpp",
 				"-Ilib",

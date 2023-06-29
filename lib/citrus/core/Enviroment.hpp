@@ -3,12 +3,16 @@
 
 #define InvalidEntity nullptr
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <vector>
 #include <thread>
 #include <chrono>
 
 #include "Entity.hpp"
 #include "Component.hpp"
+#include "Window.hpp"
+#include "Renderer.hpp"
 
 template<typename C>
 struct With {
@@ -22,21 +26,18 @@ private:
     typedef void (*StartSystem)(Enviroment*);
     typedef void (*UpdateSystem)(Enviroment*, float);
 
+    Window m_Window;
+    Renderer m_Renderer;
+
     std::vector<void*> Entities;
     
     std::vector<StartSystem> start_systems;
     std::vector<UpdateSystem> update_systems;
 
-    bool running;
-
 public:
-    Enviroment()
-     : running(false)
+    Enviroment(const Window& window, const Renderer& renderer)
+     : m_Window(window), m_Renderer(renderer)
     {}
-
-    ~Enviroment() {
-        running = false;
-    }
 
     void run() {
         for (auto& system : start_systems)
@@ -45,18 +46,21 @@ public:
         auto T0 = Clock::now();
         std::chrono::duration<float> deltaTime;
 
-        running = true;
-
-        while (running) {
+        while (!glfwWindowShouldClose(m_Window.get_glfw_window())) {
             auto T1 = Clock::now();
             deltaTime = T1 - T0;
+            m_Renderer.clear();
 
             for (auto& system : update_systems)
                 system(this, deltaTime.count());
             
+            glfwSwapBuffers(m_Window.get_glfw_window());
             T0 = T1;
         }
     }
+
+    Window* window() { return &m_Window; }
+    Renderer* renderer() { return &m_Renderer; }
 
     template <typename E>
     Enviroment* create_entity() {
@@ -87,7 +91,7 @@ public:
     }
 
     template <typename E>
-    std::vector<E*> query() const {
+    std::vector<E*> query() {
         const char* entityType = typeid(E).name();
         std::vector<E*> queriedEntities;
         E* entity;
@@ -117,14 +121,18 @@ public:
     // }
 
     template <typename E, typename C>
-    std::vector<C*> query() const {
-        const char* componentType = typeid(C).name();
+    std::vector<C*> query() {
+        const char
+            *entityType = typeid(E).name(),
+            *componentType = typeid(C).name();
         std::vector<C*> queriedComponents;
+        E* entity;
         C* component;
 
         for (int i{}; i < Entities.size(); i++) {
-            component = static_cast<E*>(Entities[i])->template get_component<C>();
-            if (component->type == componentType)
+            entity = static_cast<E*>(Entities[i]);
+            component = entity->template get_component<C>();
+            if (component->type == componentType/* && entity->type == entityType*/)
                 queriedComponents.push_back(component);
         }
         
