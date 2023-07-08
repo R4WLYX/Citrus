@@ -5,8 +5,12 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "Model.hpp"
 #include "Shader.hpp"
+#include "Renderer.hpp"
 #include "Keywords.hpp"
 
 class Window {
@@ -57,7 +61,7 @@ public:
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-        m_Renderer = std::make_unique<Renderer>();
+        m_Projection = glm::ortho(0-m_MonitorWidth/2, m_MonitorWidth/2, 0-m_MonitorHeight/2, m_MonitorHeight/2, 0, 1000);
     }
 
     ~Window() {
@@ -65,17 +69,23 @@ public:
         glfwTerminate();
     }
 
-    void attach_shader(Shader shader) {
+    void attach_shader(Shader& shader) {
         m_Shader = std::make_unique<Shader>(shader);
         m_Shader->bind();
     }
 
-    void draw(Model model) {
-
+    void clear() {
+        m_Renderer.clear();
     }
 
+    void draw(Model& model, unsigned int slot = 0) {
+        m_Renderer.draw(*model.vertexArray.get(), *model.indexBuffer.get(), *m_Shader);
+        glfwSwapBuffers(m_Window);
+    }
+    
     GLFWwindow* get_glfw_window() { return m_Window; }
     GLFWmonitor* get_glfw_monitor() { return m_Monitor; }
+    glm::mat4 projection() { return m_Projection; }
 
 private:
     GLFWwindow* m_Window;
@@ -83,7 +93,8 @@ private:
     const char* m_Title;
     int m_MonitorWidth, m_MonitorHeight;
     bool m_Fullscreen;
-    std::unique_ptr<Renderer> m_Renderer;
+    glm::mat4 m_Projection;
+    Renderer m_Renderer;
     std::unique_ptr<Shader> m_Shader;
 };
 
