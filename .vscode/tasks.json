@@ -7,8 +7,9 @@
 			"command": "D:/dev/TDM-GCC-64/bin/g++.exe",
 			"args": [
 				"-fdiagnostics-color=always",
-				"-g",
+				"-std=gnu++17",
 				"-O3",
+				"-g",
 				"-o",
 				"bin\\${fileBasenameNoExtension}.exe",
 				"${file}",

@@ -4,54 +4,26 @@
 #define InvalidComponent nullptr
 
 #include <vector>
+#include <unordered_map>
 
-#include "Component.hpp"
-
-template <typename E>
 struct Entity {
 private:
-    std::vector<void*> Components;
+    std::unordered_map<const std::type_info*, void*> components;
 
 public:
-    const char* type;
-
-    Entity()
-    : type(typeid(E).name())
-    {}
-
     template <typename C>
-    Entity<E>* add_component() {
-        if (get_component<C>() == InvalidComponent)
-            Components.push_back(new C());
+    Entity* add_component(C component) {
+        components[&typeid(C)] = new C(component);
         return this;
     }
 
     template <typename C>
-    Entity<E>* add_component(C& component) {
-        if (get_component<C>() == InvalidComponent)
-            Components.push_back(&component);
-        return this;
-    }
-
-    template <typename C>
-    Entity<E>* add_component(C&& component) {
-        if (get_component<C>() == InvalidComponent)
-            Components.push_back(&component);
-        return this;
-    }
-
-    template <typename C>
-    C* get_component() const {
-        const char* componentType = typeid(C).name();
-        C* component;
-
-        for (int i{}; i < Components.size(); i++) {
-            component = static_cast<C*>(Components[i]);
-            if (component->type == componentType)
-                return component;
+    C* get_component() {
+        auto it = components.find(&typeid(C));
+        if (it != components.end()) {
+            return static_cast<C*>(it->second);
         }
-
-        return InvalidComponent;
+        return nullptr;
     }
 };
 
