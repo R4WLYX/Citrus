@@ -22,10 +22,10 @@ public:
 
     void update_key_map() {
         for (auto& pair : KeyMap) {
-            if (pair.second == KEY_DOWN) {
-                pair.second = KEY_PRESSED;
-            } else if (pair.second == KEY_UP) {
-                pair.second = KEY_RELEASED;
+            if (pair.second == KEY_PRESSED) {
+                pair.second = KEY_DOWN;
+            } else if (pair.second == KEY_RELEASED) {
+                pair.second = KEY_UP;
             }
         }
     }
@@ -160,9 +160,9 @@ InputHandler::InputHandler(GLFWwindow* window) {
     glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
         const char* keyCode = KeyCode[key];
         if (action == GLFW_PRESS)
-            KeyMap[keyCode] = KEY_DOWN;
+            KeyMap[keyCode] = KEY_PRESSED;
         else if (action == GLFW_RELEASE)
-            KeyMap[keyCode] = KEY_UP;
+            KeyMap[keyCode] = KEY_RELEASED;
     });
 }
 

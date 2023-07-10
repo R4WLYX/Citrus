@@ -5,9 +5,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Renderer.hpp"
@@ -60,8 +57,6 @@ public:
 
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-        m_Projection = glm::ortho(0-m_MonitorWidth/2, m_MonitorWidth/2, 0-m_MonitorHeight/2, m_MonitorHeight/2, 0, 1000);
     }
 
     ~Window() {
@@ -85,7 +80,9 @@ public:
     
     GLFWwindow* get_glfw_window() { return m_Window; }
     GLFWmonitor* get_glfw_monitor() { return m_Monitor; }
-    glm::mat4 projection() { return m_Projection; }
+
+    int width() { return m_MonitorWidth; }
+    int height() { return m_MonitorHeight; }
 
 private:
     GLFWwindow* m_Window;
@@ -93,7 +90,6 @@ private:
     const char* m_Title;
     int m_MonitorWidth, m_MonitorHeight;
     bool m_Fullscreen;
-    glm::mat4 m_Projection;
     Renderer m_Renderer;
     std::unique_ptr<Shader> m_Shader;
 };
