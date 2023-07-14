@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <thread>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -17,7 +18,7 @@ class Enviroment;
 typedef void(*ON_STARTUP)(Enviroment*);
 typedef void(*ON_UPDATE)(Enviroment*, double);
 typedef void(*ON_PHYSICS)(Enviroment*, double, unsigned int);
-typedef void(*ON_RENDER)(Enviroment*, Window*, Renderer);
+typedef void(*ON_RENDER)(Enviroment*, Window*, const Renderer&);
 
 class Enviroment {
 private:
@@ -112,12 +113,14 @@ public:
         for (ON_STARTUP system : m_OnStartupSystems)
             system(this);
 
+        glfwSwapInterval(1);
+
         while (!glfwWindowShouldClose(window)) {
             auto T1 = Clock::now();
             deltaTime = T1 - T0;
-
-            glfwPollEvents();
+            
             renderer.clear();
+            glfwPollEvents();
 
             if (m_OnPhysicsUpdate.size() != 0)
             for (ON_PHYSICS system : m_OnPhysicsUpdate) {
@@ -129,12 +132,13 @@ public:
             if (m_OnUpdate.size() != 0)
             for (ON_UPDATE system : m_OnUpdate)
                 system(this, deltaTime.count());
-            
+
             if (m_OnRender.size() != 0)
-            for (ON_RENDER system : m_OnRender)
+            for (auto system : m_OnRender)
                 system(this, m_Window.get(), renderer);
 
             m_InputHandler->update_key_map();
+            
             glfwSwapBuffers(window);
             T0 = T1;
         }

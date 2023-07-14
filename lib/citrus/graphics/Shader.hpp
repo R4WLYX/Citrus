@@ -145,13 +145,13 @@ private:
         unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertexShader);
         unsigned int fs = compile_shader(GL_FRAGMENT_SHADER, fragmentShader);
 
-        glAttachShader(program, vs);
-        glAttachShader(program, fs);
-        glLinkProgram(program);
-        glValidateProgram(program);
+        GLCall(glAttachShader(program, vs));
+        GLCall(glAttachShader(program, fs));
+        GLCall(glLinkProgram(program));
+        GLCall(glValidateProgram(program));
 
-        glDeleteShader(vs);
-        glDeleteShader(fs);
+        GLCall(glDeleteShader(vs));
+        GLCall(glDeleteShader(fs));
 
         return program;
     }
